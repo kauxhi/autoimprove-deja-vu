@@ -6,10 +6,13 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License MIT"></a>
   <a href="SCOREBOARD.md"><img src="https://img.shields.io/badge/Sync%20Score-80.9-2dd4bf?style=flat-square" alt="Sync Score 80.9"></a>
   <a href="SCOREBOARD.md"><img src="https://img.shields.io/badge/D%C3%A9j%C3%A0%20Vu%20Rate-baseline%20week-8a8f98?style=flat-square" alt="Deja Vu Rate baseline week"></a>
+  <a href="https://medium.com/@kauxhik77/i-built-a-claude-code-skill-that-makes-claude-auto-improve-and-checks-whether-it-really-did-9e3af9cf85ed"><img src="https://img.shields.io/badge/Medium-Read%20the%20story-000000?style=flat-square&logo=medium" alt="Read the story on Medium"></a>
   <a href="skills/autoimprove/collect.py"><img src="https://img.shields.io/badge/python-stdlib%20only-ffd43b?style=flat-square" alt="python stdlib only"></a>
 </p>
 
 # autoimprove - Déjà Vu: a self-improving loop for Claude Code
+
+**Read the story:** [I built a Claude Code skill that makes Claude auto improve, and checks whether it really did](https://medium.com/@kauxhik77/i-built-a-claude-code-skill-that-makes-claude-auto-improve-and-checks-whether-it-really-did-9e3af9cf85ed) on Medium.
 
 autoimprove (Déjà Vu) is an open-source Claude Code skill that makes Claude auto improve at working with you: every week it reads your own local session history, measures the working relationship with a Sync Score, and tracks the Déjà Vu Rate, the share of mistakes Claude has made before, so the same mistake does not happen twice.
 
