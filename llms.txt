@@ -1,0 +1,49 @@
+# autoimprove - Déjà Vu
+
+> autoimprove (Déjà Vu) is an open-source Claude Code skill that makes Claude auto improve at working with you. Every week it reads your own local session history and git log, measures the working relationship with a Sync Score (0 to 100), and tracks the Déjà Vu Rate, the share of mistakes Claude has made before, so the same mistake does not happen twice. It proposes changes as diffs you approve. MIT licensed, one Python script, standard library only, no network.
+
+## What it is
+
+A weekly self-improving loop for Claude Code. It measures how you and Claude work together and checks whether a fixed mistake stays fixed. It is not an autonomous code editor and not a prompt optimiser.
+
+## Key terms
+
+- Déjà Vu Rate: the share of this week's failed tool calls whose fingerprint was already seen in an earlier week; the goal is 0.
+- Ghost: a mistake that came back even though a written lesson exists for it.
+- Sync Score: a 0 to 100 weighted mean of sub-scores for how smoothly the week of working with Claude Code went.
+- Mistake ledger: the `mistakes.json` file you own, one entry per fingerprint.
+- Fingerprint: a failed tool call reduced to its first meaningful line, lower-cased, with paths, urls, ids and numbers stripped.
+- Lesson: a one-line rule naming the wrong action and the right one, proposed as a diff you approve.
+- Playbook: known-good steps and traps written for a repeat task you keep redoing.
+
+## How to install
+
+```bash
+git clone --depth 1 https://github.com/kauxhi/autoimprove-deja-vu && cp -r autoimprove-deja-vu/skills/autoimprove ~/.claude/skills/ && python3 ~/.claude/skills/autoimprove/collect.py --selftest
+```
+
+Then ask Claude: run autoimprove.
+
+## How it works
+
+1. Collect: read local Claude Code sessions and git history for the last 7 days.
+2. Fingerprint: reduce each failed tool call to a normalised fingerprint.
+3. Ledger: record each fingerprint in `mistakes.json` across weeks.
+4. Score: compute the Déjà Vu Rate, Ghosts and the Sync Score.
+5. Propose: write up to 3 improvements as exact diffs, including lessons and playbooks.
+6. Approve: you accept or reject each proposal; nothing changes before that.
+7. Measure again: next week checks whether the signal moved and whether the mistake came back.
+
+## What it does not do
+
+- It does not change model weights.
+- It does not send data anywhere; it is local only.
+- It does not edit your instructions, skills, hooks or memory without your approval.
+
+## Files
+
+- [README.md](README.md): overview, glossary, formulas, FAQ
+- [skills/autoimprove/SKILL.md](skills/autoimprove/SKILL.md): the rules and steps Claude follows
+- [skills/autoimprove/collect.py](skills/autoimprove/collect.py): the local collector
+- [SCOREBOARD.md](SCOREBOARD.md): the weekly log
+- [examples/report.md](examples/report.md): a sample weekly report

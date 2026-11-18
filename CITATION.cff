@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "autoimprove - Déjà Vu"
+type: software
+message: "If you reference this project, please cite it as below."
+authors:
+  - name: "autoimprove contributors"
+repository-code: "https://github.com/kauxhi/autoimprove-deja-vu"
+url: "https://github.com/kauxhi/autoimprove-deja-vu"
+license: MIT
+keywords:
+  - autoimprove
+  - auto improve
+  - Claude Code
+  - self-improving
+  - AI coding assistant
+  - Déjà Vu Rate
+  - Sync Score
+  - agent memory
+abstract: "autoimprove (Déjà Vu) is an open-source Claude Code skill that measures how you work with Claude each week and tracks the share of mistakes Claude has made before. It proposes lessons as diffs you approve and runs locally with no network."
+date-released: 2026-11-18

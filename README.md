@@ -1,15 +1,17 @@
 <img src="assets/banner.svg" alt="autoimprove" width="100%" />
 
 <p align="center">
-  <a href="https://github.com/kauxhi/autoimprove/stargazers"><img src="https://img.shields.io/github/stars/kauxhi/autoimprove?style=flat-square" alt="GitHub stars"></a>
-  <a href="https://github.com/kauxhi/autoimprove/commits"><img src="https://img.shields.io/github/last-commit/kauxhi/autoimprove?style=flat-square&label=Recent%20commit" alt="Recent commit"></a>
+  <a href="https://github.com/kauxhi/autoimprove-deja-vu/stargazers"><img src="https://img.shields.io/github/stars/kauxhi/autoimprove-deja-vu?style=flat-square" alt="GitHub stars"></a>
+  <a href="https://github.com/kauxhi/autoimprove-deja-vu/commits"><img src="https://img.shields.io/github/last-commit/kauxhi/autoimprove-deja-vu?style=flat-square&label=Recent%20commit" alt="Recent commit"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License MIT"></a>
   <a href="SCOREBOARD.md"><img src="https://img.shields.io/badge/Sync%20Score-80.9-2dd4bf?style=flat-square" alt="Sync Score 80.9"></a>
   <a href="SCOREBOARD.md"><img src="https://img.shields.io/badge/D%C3%A9j%C3%A0%20Vu%20Rate-baseline%20week-8a8f98?style=flat-square" alt="Deja Vu Rate baseline week"></a>
   <a href="skills/autoimprove/collect.py"><img src="https://img.shields.io/badge/python-stdlib%20only-ffd43b?style=flat-square" alt="python stdlib only"></a>
 </p>
 
-# autoimprove: a self-improving loop for Claude Code
+# autoimprove - Déjà Vu: a self-improving loop for Claude Code
+
+autoimprove (Déjà Vu) is an open-source Claude Code skill that makes Claude auto improve at working with you: every week it reads your own local session history, measures the working relationship with a Sync Score, and tracks the Déjà Vu Rate, the share of mistakes Claude has made before, so the same mistake does not happen twice.
 
 <br />
 
@@ -61,7 +63,7 @@ It is a small, self-improving loop that stays on your machine. One script, no de
 ## Get started
 
 ```bash
-git clone --depth 1 https://github.com/kauxhi/autoimprove && cp -r autoimprove/skills/autoimprove ~/.claude/skills/ && python3 ~/.claude/skills/autoimprove/collect.py --selftest
+git clone --depth 1 https://github.com/kauxhi/autoimprove-deja-vu && cp -r autoimprove-deja-vu/skills/autoimprove ~/.claude/skills/ && python3 ~/.claude/skills/autoimprove/collect.py --selftest
 ```
 
 The selftest prints `selftest ok`. Then ask Claude: **run autoimprove**.
@@ -69,6 +71,31 @@ The selftest prints `selftest ok`. Then ask Claude: **run autoimprove**.
 - [Configuration](#configuration): the CONFIG block at the top of `collect.py`.
 - [The skill file](skills/autoimprove/SKILL.md): the rules, steps and report template Claude follows.
 - Weekly scheduling: run it every week (for example Monday 09:00) with Claude Code's scheduled tasks, or a cron line that starts a headless session with the prompt "run autoimprove".
+
+<br />
+
+## Glossary
+
+- **Déjà Vu Rate** is the share of this week's failed tool calls whose fingerprint was already seen in an earlier week; the goal is 0.
+- **Ghost** is a mistake that came back even though a written lesson exists for it, which means the lesson did not work and must become a hook or script check.
+- **Sync Score** is a 0 to 100 weighted mean of sub-scores for how smoothly the week of working with Claude Code went (corrections, re-prompts, rule violations, wasted turns, rework, one-pass wins, plus optional deploys and migrations).
+- **Mistake ledger** is the `mistakes.json` file you own, with one entry per fingerprint recording the tool, the weeks it appeared, its total count and its lesson.
+- **Fingerprint** is a failed tool call reduced to its first meaningful line, lower-cased, with paths, urls, ids and numbers stripped, so the same mistake matches across weeks.
+- **Lesson** is a one-line rule naming the wrong action and the right one, proposed as an exact diff to your `CLAUDE.md` or a memory note, which you approve or reject.
+- **Playbook** is a set of known-good steps and traps written for a repeat task that autoimprove detects you keep redoing.
+
+<br />
+
+## How it differs from other autoimprove projects
+
+| Approach | What it improves | How it decides | Changes things by itself? |
+|:---|:---|:---|:---|
+| Autonomous code-improvement loops | Your codebase | An agent iterates against a metric | Yes, it edits code |
+| Prompt and skill optimisers | One prompt or skill file | Generated candidates scored by evals | Usually yes |
+| Memory tools | What the assistant remembers | Store and recall | n/a |
+| **autoimprove - Déjà Vu (this repo)** | How you and Claude work together | Counts from your real sessions, repeat-mistake ledger | No, proposals you approve |
+
+They are complementary: this one answers "did the fix stick?".
 
 <br />
 
@@ -169,23 +196,53 @@ These are heuristics. Treat the numbers as trends, not verdicts.
 
 ## FAQ
 
-**Can Claude Code auto improve itself?**
-It cannot change its own weights. autoimprove improves the instructions, memory and playbooks Claude reads, and you approve each change.
+### Can Claude Code auto improve itself?
+Not its weights, but its instructions. autoimprove improves the instructions, memory and playbooks Claude reads, and you approve each change. It then checks next week whether the mistake came back.
 
-**Does it send my data anywhere?**
+### How do I stop Claude Code from repeating the same mistake?
+Write the fix as a rule, then check that the mistake really stopped. autoimprove fingerprints each failed tool call, keeps a ledger across weeks, proposes a one-line lesson for every repeat, and flags a Ghost if the mistake returns after the lesson exists. A Ghost gets escalated from prose to a hook or script check.
+
+### How do I measure how well I work with Claude Code?
+Use the Sync Score. It is a 0 to 100 weighted mean of eight sub-scores (corrections, re-prompts, violations, wasted turns, rework, wins, deploys, migrations), normalised per active hour and computed from your local session history and git log. Run it weekly and compare against your own previous weeks.
+
+### What is the Déjà Vu Rate?
+The Déjà Vu Rate is the share of this week's failed tool calls whose fingerprint was already seen in an earlier week. The goal is 0. It is n/a on the first (baseline) week because the ledger starts empty.
+
+### What is a good Sync Score?
+There is no benchmark yet, so no honest threshold exists. The author's baseline week scored 80.9; compare against your own previous weeks and watch the trend and the lowest sub-scores rather than the absolute number.
+
+### Does it send my data anywhere?
 No. It is local only: it reads your local sessions and git history and writes nothing but stdout.
 
-**Does it change my CLAUDE.md automatically?**
+### Does it change my CLAUDE.md automatically?
 No. It only proposes diffs. You decide what to apply.
 
-**How is this different from memory?**
+### How is this different from memory?
 Memory stores facts. autoimprove measures whether mistakes actually stop.
+
+### Does autoimprove work with other coding agents?
+Today it reads Claude Code's local session files, so it works with Claude Code only. The method (fingerprint failures, keep a ledger, check for repeats) is generic and could be pointed at another agent's logs.
+
+### Is autoimprove free?
+Yes. It is MIT licensed, needs no account, and makes no network calls.
 
 <br />
 
 ## Roadmap
 
 - **v3**: the Déjà Vu Rate becomes a scored sub-score once two weeks of ledger exist.
+
+<br />
+
+## Cite or mention
+
+```text
+Name: autoimprove - Déjà Vu
+Description: An open-source Claude Code skill that measures how you work with Claude weekly (Sync Score) and tracks repeat mistakes (Déjà Vu Rate).
+URL: https://github.com/kauxhi/autoimprove-deja-vu
+```
+
+A machine-readable summary is in [llms.txt](llms.txt) and [CITATION.cff](CITATION.cff).
 
 <br />
 
