@@ -74,16 +74,9 @@ The selftest prints `selftest ok`. Then ask Claude: **run autoimprove**.
 
 ## The weekly loop
 
-```mermaid
-flowchart LR
-    A[Collect a week of<br/>local sessions + git] --> B[Fingerprint<br/>failed tool calls]
-    B --> C[(Mistake ledger)]
-    C --> D[Déjà Vu Rate<br/>+ Sync Score]
-    D --> E[Lessons and<br/>playbooks proposed]
-    E --> F{Human approves}
-    F --> G[Next week measures<br/>whether it worked]
-    G --> A
-```
+<img src="assets/weekly-loop.svg" alt="The autoimprove weekly loop: collect, fingerprint, ledger, score, propose, approve, measure again" width="100%" />
+
+One turn a week: nothing in step 6 changes your setup until you say yes.
 
 <br />
 
