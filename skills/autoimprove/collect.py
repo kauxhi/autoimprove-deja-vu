@@ -96,7 +96,8 @@ def fingerprint(text):
         lines = lines[1:]
     if lines[0].startswith("Traceback"):
         lines = lines[-1:]
-    s = lines[0][:160].lower()
+    # the harness echoes the offending command after "followed by:"; that tail is not the mistake
+    s = lines[0].split(" followed by:")[0][:160].lower()
     for rx, rep in _FP_SUBS:
         s = rx.sub(rep, s)
     return " ".join(s.split())[:80]
@@ -397,6 +398,8 @@ def selftest():
     # fingerprints
     a = fingerprint("Exit code 1\nTraceback ... /home/x/y.py line 42")
     assert a == fingerprint("Exit code 1\nTraceback ... /home/q/z/w.py line 7")
+    assert fingerprint("<tool_use_error>Blocked: sleep 45 followed by: echo ok. To wait") == \
+        fingerprint("<tool_use_error>Blocked: sleep 9 followed by: curl -s http://x") == "<tool_use_error>blocked: sleep <n>"
     assert fingerprint("") == "" and fingerprint(None) == ""
     assert fingerprint("Error reading /home/x/y.py line 42") == \
         fingerprint("Error reading /tmp/a/b.py line 9") == "error reading <path> line <n>"
