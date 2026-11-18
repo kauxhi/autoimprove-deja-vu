@@ -1,4 +1,4 @@
-# dejavu-zero 2026-11-25 (EXAMPLE)
+# autoimprove 2026-11-25 (EXAMPLE)
 
 > This is an invented example report. Numbers, session ids and fingerprints are made up to show the format.
 

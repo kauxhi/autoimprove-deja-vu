@@ -1,9 +1,9 @@
 ---
-name: dejavu-zero
-description: Weekly review of how you and Claude work together. Reads the last 7 days of local Claude Code sessions and git history, reports the Déjà Vu Rate (mistakes that came back) and the Sync Score (0 to 100, formula v2), diagnoses the top 3 friction patterns, flags repeat tasks and proposes up to 3 improvements. Use when the user says "dejavu zero", "weekly review", "sync score", "deja vu rate", or when a weekly scheduled task fires.
+name: autoimprove
+description: Auto improve how Claude Code works with you. Weekly review of your local Claude Code sessions and git history: reports the Déjà Vu Rate (mistakes that came back) and the Sync Score (0 to 100, formula v2), diagnoses the top 3 friction patterns, flags repeat tasks and proposes up to 3 improvements as diffs you approve. Use when the user says "autoimprove", "auto improve", "self improve", "weekly review", "sync score", "deja vu rate", or when a weekly scheduled task fires.
 ---
 
-# dejavu-zero
+# autoimprove
 
 Your AI should never make the same mistake twice. This skill measures whether it does.
 
@@ -15,23 +15,23 @@ Output: one report in the notes folder, one SCOREBOARD row, at most 3 proposals.
 - Counts and ids only. Never quote transcript text, prompts, or raw error text in the report. Session ids, dates, commit shas and normalised fingerprints are fine.
 - Every number comes from `collect.py` output. Every number is counted, never estimated. A signal that could not be measured is `n/a` and drops out of the weights.
 - Never apply a proposal. No edits to `CLAUDE.md`, skills, hooks or memory. Proposals are exact diffs in the report; the user approves each one.
-- Writes allowed only in the notes folder (default `~/.claude/dejavu-zero/`, ask the user once on the first run and remember the answer there in `config.json`). That folder holds the reports, `mistakes.json` (the ledger) and `SCOREBOARD.md`.
+- Writes allowed only in the notes folder (default `~/.claude/autoimprove/`, ask the user once on the first run and remember the answer there in `config.json`). That folder holds the reports, `mistakes.json` (the ledger) and `SCOREBOARD.md`.
 - Report shape: next action first, numbered, lists capped at 5, no preamble.
 
 ## Steps
 
-1. Optional connector counts. If deploy or database MCP tools are connected, count for the same 7-day window and write `$TMPDIR/dejavu-extra.json`:
+1. Optional connector counts. If deploy or database MCP tools are connected, count for the same 7-day window and write `$TMPDIR/autoimprove-extra.json`:
    `{"deploys": {"total": int, "failed": int}, "migrations": {"total": int, "fix": int}}`
    - `failed` = deployments in an error state. Cancelled builds do not count.
    - `fix` = migrations whose name contains fix, revert, hotfix or rollback.
    - Counts only: never read row data. Skip any connector that is unavailable and leave its key out (its sub-score becomes n/a).
-2. Collect: `python3 ~/.claude/skills/dejavu-zero/collect.py --extra "$TMPDIR/dejavu-extra.json" --ledger ~/.claude/dejavu-zero/mistakes.json > "$TMPDIR/dejavu.json"`. Drop `--extra` if step 1 was skipped. Add `--end YYYY-MM-DD` to rerun a past week. A missing ledger is fine (empty ledger, baseline week).
-3. Save the ledger: write the JSON's `ledger_next` to `~/.claude/dejavu-zero/mistakes.json` with the Write tool. The script never writes it.
+2. Collect: `python3 ~/.claude/skills/autoimprove/collect.py --extra "$TMPDIR/autoimprove-extra.json" --ledger ~/.claude/autoimprove/mistakes.json > "$TMPDIR/autoimprove.json"`. Drop `--extra` if step 1 was skipped. Add `--end YYYY-MM-DD` to rerun a past week. A missing ledger is fine (empty ledger, baseline week).
+3. Save the ledger: write the JSON's `ledger_next` to `~/.claude/autoimprove/mistakes.json` with the Write tool. The script never writes it.
 4. Report the Déjà Vu Rate first (`repeat_mistakes`), then the Sync Score (`sync_score`, `sub_scores`) with the delta against the previous SCOREBOARD row. Week 1 is the baseline.
 5. Diagnose: the 3 lowest weighted sub-scores. For each, cite `evidence` entries (session id and date, or commit sha). You may open cited sessions to understand the pattern, but report only what kind of thing happened.
 6. Repeat tasks: for the top `repeat_tasks` entry by friction, one proposal must be a playbook (see below).
 7. Propose at most 3 improvements, each an exact diff (file path, lines to add or change) naming the one signal it should move. Check last week's proposals first: applied or not, and whether their signal moved.
-8. Write `~/.claude/dejavu-zero/YYYY-MM-DD.md` (template below). Append the row from `collect.py ... --scoreboard-row` to `~/.claude/dejavu-zero/SCOREBOARD.md`.
+8. Write `~/.claude/autoimprove/YYYY-MM-DD.md` (template below). Append the row from `collect.py ... --scoreboard-row` to `~/.claude/autoimprove/SCOREBOARD.md`.
 9. Reply with the Déjà Vu Rate, the Sync Score, the delta, and the proposals as numbered choices. Stop there.
 
 ## Déjà Vu Rate (the headline)
@@ -72,7 +72,7 @@ A playbook is a short note or skill holding the known-good steps, the working st
 ## Report template
 
 ```markdown
-# dejavu-zero YYYY-MM-DD
+# autoimprove YYYY-MM-DD
 
 Next action: approve or reject proposals 1 to 3.
 
@@ -110,4 +110,4 @@ Applied or not, and whether the signal moved.
 
 ## Check
 
-`python3 ~/.claude/skills/dejavu-zero/collect.py --selftest` must print `selftest ok` after any edit to the script.
+`python3 ~/.claude/skills/autoimprove/collect.py --selftest` must print `selftest ok` after any edit to the script.

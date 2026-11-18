@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""dejavu-zero collector, formula v2. Read-only, stdlib only, Python 3.9+, nothing leaves the machine.
+"""autoimprove collector, formula v2. Read-only, stdlib only, Python 3.9+, nothing leaves the machine.
 
 Usage: collect.py [--days 7] [--end YYYY-MM-DD] [--extra PATH] [--repeat-days 30] [--ledger PATH]
                   [--scoreboard-row]                     -> JSON (or one markdown row) on stdout

@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="assets/banner.png" alt="dejavu-zero" width="100%">
+  <img src="assets/banner.png" alt="autoimprove" width="100%">
 </p>
+
+# autoimprove: a self-improving loop for Claude Code
 
 <p align="center"><b>Your AI should never make the same mistake twice.</b></p>
 
@@ -12,7 +14,15 @@
   <img src="https://img.shields.io/badge/python-stdlib%20only-ffd43b" alt="stdlib only">
 </p>
 
-A Claude Code skill that reviews a week of your own sessions every Monday, scores how well you and Claude work together, and tracks whether Claude repeats a mistake it already made.
+autoimprove is a Claude Code skill that makes Claude auto improve at working with you. Every week it reviews your own sessions, measures the working relationship, and turns repeated mistakes into lessons, so the same mistake does not happen twice. It is a small, self-improving loop that runs on your machine and changes nothing without your approval.
+
+## What autoimprove does
+
+- Reviews a week of your own Claude Code sessions and git history.
+- Tracks the Déjà Vu Rate: how often a mistake you already fixed comes back.
+- Scores the Sync Score (0 to 100): how smoothly you and Claude worked together.
+- Proposes lessons and playbooks as diffs you approve, never applies them itself.
+- Keeps a scoreboard you can publish or keep private.
 
 ## Why
 
@@ -35,6 +45,8 @@ flowchart LR
 ```
 
 ## The two numbers
+
+The goal is Déjà Vu zero.
 
 **Déjà Vu Rate** is the headline. Of this week's failed tool calls, what share has a fingerprint already seen in an earlier week? The goal is 0. Its companion count is **Ghosts**: mistakes that came back even though a written lesson exists for them. A Ghost means the lesson did not work, so it gets upgraded from prose to a hook or a script check.
 
@@ -86,12 +98,12 @@ Active hours are the gaps between consecutive events in a session, each capped a
 ## Install
 
 ```bash
-git clone https://github.com/kauxhi/dejavu-zero
-cp -r dejavu-zero/skills/dejavu-zero ~/.claude/skills/
-python3 ~/.claude/skills/dejavu-zero/collect.py --selftest   # prints: selftest ok
+git clone https://github.com/kauxhi/autoimprove
+cp -r autoimprove/skills/autoimprove ~/.claude/skills/
+python3 ~/.claude/skills/autoimprove/collect.py --selftest   # prints: selftest ok
 ```
 
-Then ask Claude: **"run dejavu zero"**.
+Then ask Claude: **"run autoimprove"**.
 
 Optional: schedule it weekly (for example Monday 09:00) with Claude Code's scheduled tasks, or a cron line that starts a headless session with that prompt.
 
@@ -130,6 +142,20 @@ These are heuristics. Treat the numbers as trends, not verdicts.
 - Repeat-task topics are keyword matches, so a topic word used in passing counts.
 - Fingerprints can merge two different errors with the same shape, or split one error that prints differently.
 - Connector sub-scores are only as good as the counts Claude gathers.
+
+## FAQ
+
+**Can Claude Code auto improve itself?**
+It cannot change its own weights. autoimprove improves the instructions, memory and playbooks Claude reads, and you approve each change.
+
+**Does it send my data anywhere?**
+No. It is local only: it reads your local sessions and git history and writes nothing but stdout.
+
+**Does it change my CLAUDE.md automatically?**
+No. It only proposes diffs. You decide what to apply.
+
+**How is this different from memory?**
+Memory stores facts. autoimprove measures whether mistakes actually stop.
 
 ## Roadmap
 
