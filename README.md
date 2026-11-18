@@ -248,6 +248,7 @@ A machine-readable summary is in [llms.txt](llms.txt) and [CITATION.cff](CITATIO
 
 ## Resources
 
+- [The story behind it, on Medium](https://medium.com/@kauxhik77/i-built-a-claude-code-skill-that-makes-claude-auto-improve-and-checks-whether-it-really-did-9e3af9cf85ed)
 - [skills/autoimprove/SKILL.md](skills/autoimprove/SKILL.md): the skill Claude follows.
 - [skills/autoimprove/collect.py](skills/autoimprove/collect.py): the local collector.
 - [SCOREBOARD.md](SCOREBOARD.md): the weekly log.
