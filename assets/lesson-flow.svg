@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-label="How a mistake becomes a lesson: mistake, fingerprint, ledger, lesson; a Ghost upgrades to a hook">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2dd4bf"/>
+    </marker>
+  </defs>
+  <rect x="0.5" y="0.5" width="1199" height="459" rx="16" fill="#0b0d10" stroke="#1f2430"/>
+  <g font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="60" y="60" font-size="14" letter-spacing="2" fill="#8a8f98">HOW A MISTAKE BECOMES A LESSON</text>
+
+    <rect x="60" y="90" width="240" height="190" rx="12" fill="#11151b" stroke="#1f2430"/>
+    <rect x="340" y="90" width="240" height="190" rx="12" fill="#11151b" stroke="#1f2430"/>
+    <rect x="620" y="90" width="240" height="190" rx="12" fill="#11151b" stroke="#1f2430"/>
+    <rect x="900" y="90" width="240" height="190" rx="12" fill="#11151b" stroke="#1f2430"/>
+
+    <g font-size="18" font-weight="500" fill="#f2f2ee">
+      <text x="84" y="130">1. Mistake</text>
+      <text x="364" y="130">2. Fingerprint</text>
+      <text x="644" y="130">3. Ledger</text>
+      <text x="924" y="130">4. Lesson</text>
+    </g>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#8a8f98">
+      <text x="84" y="176">mkdir: /app/cache:</text>
+      <text x="84" y="196">operation not permitted</text>
+      <text x="364" y="176">mkdir: &lt;path&gt;:</text>
+      <text x="364" y="196">operation not permitted</text>
+    </g>
+
+    <g font-size="15" fill="#8a8f98">
+      <text x="644" y="176">seen in 5 sessions</text>
+      <text x="644" y="200">weeks: 1</text>
+      <text x="644" y="224">lesson: none</text>
+    </g>
+    <g font-size="15" fill="#f2f2ee">
+      <text x="924" y="176">Use the Write tool for</text>
+      <text x="924" y="198">protected folders.</text>
+    </g>
+
+    <g stroke="#2dd4bf" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+      <line x1="304" y1="185" x2="334" y2="185"/>
+      <line x1="584" y1="185" x2="614" y2="185"/>
+      <line x1="864" y1="185" x2="894" y2="185"/>
+    </g>
+
+    <path d="M1020 284 C1020 380, 180 380, 180 290" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="6 6" marker-end="url(#arrow)"/>
+    <text x="600" y="410" font-size="16" text-anchor="middle" fill="#f2f2ee">comes back anyway? it is a Ghost: upgrade to a hook</text>
+  </g>
+</svg>
