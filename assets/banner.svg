@@ -4,12 +4,11 @@
   </defs>
   <g clip-path="url(#frame)">
     <rect width="1280" height="400" fill="#0b0d10"/>
-    <circle cx="170" cy="176" r="92" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="520 58" stroke-linecap="round" transform="rotate(-60 170 176)"/>
-    <g font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="96" font-weight="500" fill="#f2f2ee">
+    <circle cx="162" cy="168" r="72" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="400 52" stroke-linecap="round" transform="rotate(-60 162 168)"/>
+    <g font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="84" font-weight="500" fill="#f2f2ee">
       <text x="120" y="208">autoimprove</text>
-      <text x="760" y="208" opacity="0.22">autoimprove</text>
-      <text x="1110" y="208" opacity="0.10">autoimprove</text>
-      <text x="1460" y="208" opacity="0.04">autoimprove</text>
+      <text x="650" y="208" opacity="0.16">autoimprove</text>
+      <text x="1180" y="208" opacity="0.07">autoimprove</text>
     </g>
     <text x="124" y="262" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#8a8f98">Your AI should never make the same mistake twice.</text>
   </g>
